@@ -1,7 +1,7 @@
 const os = require('os');
 const http = require('http');
 
-const server = http.createServer(function (request, response) {
+const server = http.createServer(async function (request, response) {
   if (request.url === '/favicon.ico') {
     response.writeHead(200, {'Content-Type': 'image/x-icon'} );
     response.end();
@@ -11,6 +11,7 @@ const server = http.createServer(function (request, response) {
 
   response.writeHead(200, {"Content-Type": "application/json"});
   console.log('I have been hit')
+  await new Promise(resolve => setTimeout(resolve, 200));
   response.end(JSON.stringify({
       message: request.connection.remoteAddress,
       net:os.networkInterfaces()
